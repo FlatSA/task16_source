@@ -6,14 +6,19 @@ pipeline {
   }
 
   stages {
+    stage ('Get Last Commit Hash') {
+      steps {
+        script {
+          env.LAST_COMMIT_HASH = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+       }
+      }
+    }
 
     stage('Build Docker Image') {
       steps {
         sh """
-          export LAST_COMMIT_HASH "\$(git rev-parse HEAD)"
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build --no-cache -t flat1337/apache-back apache-server
-          echo $LAST_COMMIT_HASH
         """ 
       }
     }
