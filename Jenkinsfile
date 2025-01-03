@@ -23,17 +23,17 @@ pipeline {
       steps {
         script {
           def command = """
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
-          if [[ "$(docker ps -aq -f name=apache-server)" ]]; then
-            docker stop apache-server
-            docker rm apache-server
-          fi
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            if [[ "$(docker ps -aq -f name=apache-server)" ]]; then
+              docker stop apache-server
+              docker rm apache-server
+            fi
 
-          docker pull flat1337/apache-back:latest
+            docker pull flat1337/apache-back:latest
 
-          docker run -itd --name apache-server -p 80:80 flat1337/apache-back:latest
+            docker run -itd --name apache-server -p 80:80 flat1337/apache-back:latest
 
-          docker image prune -af
+            docker image prune -af
           """
           sshPublisher(publishers: [
             sshPublisherDesc(
