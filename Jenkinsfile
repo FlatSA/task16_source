@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    LAST_COMMIT_HASH = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+    LAST_COMMIT_HASH = sh(script: "git rev-parse HEAD", returnStdout: true).trim().take(5)
 
   }
 
@@ -20,7 +20,6 @@ pipeline {
     stage('Push Docker Image') {
       steps {
         sh """
-          echo ${env.LAST_COMMIT_HASH}
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push flat1337/apache-back:${LAST_COMMIT_HASH}
         """
