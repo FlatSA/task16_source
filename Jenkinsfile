@@ -13,6 +13,7 @@ pipeline {
           LAST_COMMIT_HASH="\$(git rev-parse HEAD)"
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build --no-cache -t flat1337/apache-back apache-server
+          echo $LAST_COMMIT_HASH
         """ 
       }
     }
@@ -20,6 +21,7 @@ pipeline {
     stage('Push Docker Image') {
       steps {
         sh """
+          echo $LAST_COMMIT_HASH
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push flat1337/apache-back:$LAST_COMMIT_HASH
         """
