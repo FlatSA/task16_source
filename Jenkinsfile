@@ -12,7 +12,7 @@ pipeline {
       steps {
         sh """
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker build --no-cache -t flat1337/apache-back apache-server
+          docker build --no-cache -t flat1337/apache-back:$LAST_COMMIT_HASH apache-server
         """ 
       }
     }
