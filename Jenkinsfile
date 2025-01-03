@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    LAST_COMMIT_HASH=''
+    LAST_COMMIT_HASH = ''
   }
 
   stages {
