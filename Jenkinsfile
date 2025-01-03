@@ -1,5 +1,5 @@
 pipeline {
-  agen any
+  agent any
 
     stage('Build Docker Image') {
       steps {
