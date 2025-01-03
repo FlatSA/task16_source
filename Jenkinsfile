@@ -10,7 +10,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         sh """
-          LAST_COMMIT_HASH=$(git rev-parse HEAD)
+          LAST_COMMIT_HASH="\$(git rev-parse HEAD)"
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build --no-cache -t flat1337/apache-back apache-server
         """ 
