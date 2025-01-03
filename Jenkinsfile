@@ -2,17 +2,11 @@ pipeline {
   agent any
 
   environment {
-    LAST_COMMIT_HASH = ''
+    LAST_COMMIT_HASH = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+
   }
 
   stages {
-    stage ('Get Last Commit Hash') {
-      steps {
-        script {
-          env.LAST_COMMIT_HASH = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-       }
-      }
-    }
 
     stage('Build Docker Image') {
       steps {
