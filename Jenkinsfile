@@ -37,7 +37,7 @@ pipeline {
           """
           sshPublisher(publishers: [
             sshPublisherDesc(
-              configName: "apache"
+              configName: "apache",
               transfers: [
                 sshTransfer(
                   sourceFiles: '',
