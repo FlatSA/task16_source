@@ -24,7 +24,7 @@ pipeline {
         script {
           def command = """
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            if [[ "$(docker ps -aq -f name=apache-server)" ]]; then
+            if [[ "${docker ps -aq -f name=apache-server}" ]]; then
               docker stop apache-server
               docker rm apache-server
             fi
