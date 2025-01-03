@@ -1,11 +1,16 @@
 pipeline {
   agent any
 
+  environment {
+    LAST_COMMIT_HASH=''
+  }
+
   stages {
 
     stage('Build Docker Image') {
       steps {
         sh """
+          LAST_COMMIT_HASH=$(git rev-parse HEAD)
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build --no-cache -t flat1337/apache-back apache-server
         """ 
@@ -16,7 +21,7 @@ pipeline {
       steps {
         sh """
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push flat1337/apache-back:latest
+          docker push flat1337/apache-back:$LAST_COMMIT_HASH
         """
       }
     }
@@ -31,9 +36,9 @@ pipeline {
               docker rm apache-server
             fi
 
-            docker pull flat1337/apache-back:latest
+            docker pull flat1337/apache-back:$LAST_COMMIT_HASH
 
-            docker run -itd --name apache-server -p 80:80 flat1337/apache-back:latest
+            docker run -itd --name apache-server -p 80:80 flat1337/apache-back:$LAST_COMMIT_HASH
 
             docker image prune -af
           """
