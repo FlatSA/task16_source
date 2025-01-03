@@ -28,7 +28,7 @@ pipeline {
         sh """
           echo ${env.LAST_COMMIT_HASH}
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push flat1337/apache-back:${env.LAST_COMMIT_HASH}
+          docker push flat1337/apache-back:${LAST_COMMIT_HASH}
         """
       }
     }
@@ -43,9 +43,9 @@ pipeline {
               docker rm apache-server
             fi
 
-            docker pull flat1337/apache-back:${env.LAST_COMMIT_HASH}
+            docker pull flat1337/apache-back:${LAST_COMMIT_HASH}
 
-            docker run -itd --name apache-server -p 80:80 flat1337/apache-back:${env.LAST_COMMIT_HASH}
+            docker run -itd --name apache-server -p 80:80 flat1337/apache-back:${LAST_COMMIT_HASH}
 
             docker image prune -af
           """
