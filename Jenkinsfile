@@ -3,19 +3,19 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        script {
+        sh """
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build --no-cache -t flat1337/apache-back apacheserver
-        }
+        """ 
       }
     }
 
     stage('Push Docker Image') {
       steps {
-        script {
+        sh """
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push flat1337/apache-back:latest
-        }
+        """
       }
     }
 
