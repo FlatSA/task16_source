@@ -47,7 +47,7 @@ pipeline {
                 )
               ],
               usePromotionTimestamp: false,
-              verbosity: 0
+              verbose: true
             )
           ])
         }
